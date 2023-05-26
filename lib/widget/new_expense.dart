@@ -5,9 +5,7 @@ class NewExpense extends StatefulWidget {
   const NewExpense({super.key});
 
   @override
-  State<NewExpense> createState() {
-    return _NewExpenseState();
-  }
+  State<NewExpense> createState() => _NewExpenseState();
 }
 
 class _NewExpenseState extends State<NewExpense> {
@@ -29,6 +27,8 @@ class _NewExpenseState extends State<NewExpense> {
       _selectedDate = pickedDate;
     });
   }
+
+  void submitExpenseData;
 
   @override
   void dispose() {

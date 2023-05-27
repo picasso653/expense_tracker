@@ -28,7 +28,29 @@ class _NewExpenseState extends State<NewExpense> {
     });
   }
 
-  void submitExpenseData;
+  void submitExpenseData() {
+    final enteredAmount = double.tryParse(_amountController.text);
+    final bool amountIsInvalid = enteredAmount == null || enteredAmount <= 0;
+    if (_titleController.text.trim().isEmpty ||
+        amountIsInvalid ||
+        _selectedDate == null) {
+      showDialog(
+          context: context,
+          builder: (ctx) {
+            return AlertDialog(
+              title: const Text('Invalid Input'),
+              actions: [
+                TextButton(
+                    onPressed: () {
+                      Navigator.pop(ctx);
+                    },
+                    child: const Text('Okay'))
+              ],
+            );
+          });
+      return;
+    }
+  }
 
   @override
   void dispose() {

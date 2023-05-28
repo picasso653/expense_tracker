@@ -12,8 +12,9 @@ import 'package:flutter/src/widgets/framework.dart';
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
       child: Card(child:  Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(expense.title),
+          Text(expense.title, style: Theme.of(context).textTheme.titleLarge,),
           const SizedBox(height: 5,),
           Row(
             children: [

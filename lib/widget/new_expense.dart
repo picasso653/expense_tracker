@@ -2,7 +2,9 @@ import 'package:expense_tracker/model/expense.dart';
 import 'package:flutter/material.dart';
 
 class NewExpense extends StatefulWidget {
-  const NewExpense({super.key});
+  const NewExpense({super.key, required this.onAddExpense});
+
+  final void Function(Expense expense) onAddExpense;
 
   @override
   State<NewExpense> createState() => _NewExpenseState();
@@ -39,6 +41,7 @@ class _NewExpenseState extends State<NewExpense> {
           builder: (ctx) {
             return AlertDialog(
               title: const Text('Invalid Input'),
+              content: const Text('Please make sure all input is valid'),
               actions: [
                 TextButton(
                     onPressed: () {
@@ -50,6 +53,12 @@ class _NewExpenseState extends State<NewExpense> {
           });
       return;
     }
+    widget.onAddExpense(Expense(
+        amount: enteredAmount,
+        date: _selectedDate!,
+        title: _titleController.text,
+        category: _selectedCategory));
+    Navigator.pop(context);
   }
 
   @override
@@ -62,7 +71,7 @@ class _NewExpenseState extends State<NewExpense> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(16),
+      padding: const EdgeInsets.only(top: 48, left: 16, right: 16, bottom: 16),
       child: Column(
         children: [
           TextField(
@@ -138,10 +147,7 @@ class _NewExpenseState extends State<NewExpense> {
                 child: const Text('Cancel'),
               ),
               ElevatedButton(
-                onPressed: () {
-                  print(_titleController.text);
-                  print(_amountController.text);
-                },
+                onPressed: submitExpenseData,
                 child: const Text('Save Expense'),
               ),
             ],

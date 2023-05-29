@@ -49,7 +49,9 @@ class _ExpensesState extends State<Expenses> {
     ScaffoldMessenger.of(context).clearSnackBars();
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        duration: const Duration(seconds: 3,),
+        duration: const Duration(
+          seconds: 3,
+        ),
         content: const Text('Expense has been removed'),
         action: SnackBarAction(
             label: 'Undo',
@@ -64,14 +66,16 @@ class _ExpensesState extends State<Expenses> {
 
   @override
   Widget build(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
+    final height = MediaQuery.of(context).size.height;
     Widget mainContent = const Center(
       child: Text('No expenses found.'),
     );
     if (_registeredExpenses.isNotEmpty) {
-       mainContent =  ExpensesList(
-            expenses: _registeredExpenses,
-            onRemoveExpense: removeExpense,
-          );
+      mainContent = ExpensesList(
+        expenses: _registeredExpenses,
+        onRemoveExpense: removeExpense,
+      );
     }
     return Scaffold(
       appBar: AppBar(
@@ -79,10 +83,15 @@ class _ExpensesState extends State<Expenses> {
           IconButton(onPressed: _openAddOverlay, icon: const Icon(Icons.add))
         ],
       ),
-      body: Column(
+      body: width < height ?Column(
         children: [
-           Chart(expenses: _registeredExpenses),
+          Chart(expenses: _registeredExpenses),
           Expanded(child: mainContent),
+        ],
+      ): Row(
+        children: [
+          Expanded(child: Chart(expenses: _registeredExpenses)),
+          Expanded(child: mainContent)
         ],
       ),
     );

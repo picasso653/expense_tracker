@@ -1,4 +1,3 @@
-
 import 'package:expense_tracker/widget/chart/chart.dart';
 import 'package:expense_tracker/widget/expenses-list/expenses_list.dart';
 import 'package:expense_tracker/model/expense.dart';
@@ -28,11 +27,13 @@ class _ExpensesState extends State<Expenses> {
 
   void _openAddOverlay() {
     showModalBottomSheet(
-        isScrollControlled: true,
-        context: context,
-        builder: (ctx) => NewExpense(
-              onAddExpense: addExpense,
-            ));
+      useSafeArea: true,
+      isScrollControlled: true,
+      context: context,
+      builder: (ctx) => NewExpense(
+        onAddExpense: addExpense,
+      ),
+    );
   }
 
   void addExpense(Expense expense) {
@@ -83,17 +84,19 @@ class _ExpensesState extends State<Expenses> {
           IconButton(onPressed: _openAddOverlay, icon: const Icon(Icons.add))
         ],
       ),
-      body: width < height ?Column(
-        children: [
-          Chart(expenses: _registeredExpenses),
-          Expanded(child: mainContent),
-        ],
-      ): Row(
-        children: [
-          Expanded(child: Chart(expenses: _registeredExpenses)),
-          Expanded(child: mainContent)
-        ],
-      ),
+      body: width < height
+          ? Column(
+              children: [
+                Chart(expenses: _registeredExpenses),
+                Expanded(child: mainContent),
+              ],
+            )
+          : Row(
+              children: [
+                Expanded(child: Chart(expenses: _registeredExpenses)),
+                Expanded(child: mainContent)
+              ],
+            ),
     );
   }
 }
